@@ -69,30 +69,37 @@ namespace SleuthKit
         /// TSK_VS_TYPE_DETECT, Use autodetection methods
         /// </summary>
         Autodetect = 0x0000,
+
         /// <summary>
         /// TSK_VS_TYPE_DOS, DOS Partition table
         /// </summary>
         MBR = 0x0001,
+
         /// <summary>
         /// TSK_VS_TYPE_BSD, BSD Partition table
         /// </summary>
         BSD = 0x0002,
+
         /// <summary>
         /// TSK_VS_TYPE_SUN, Sun VTOC
         /// </summary>
         Sun = 0x0004,
+
         /// <summary>
         /// TSK_VS_TYPE_MAC, Mac partition table (APM)
         /// </summary>
         Apple = 0x0008,
+
         /// <summary>
         /// TSK_VS_TYPE_GPT, GPT partition table
         /// </summary>
         GPT = 0x0010,
+
         /// <summary>
         /// TSK_VS_TYPE_DBFILLER, fake partition table type for loaddb (for images that do not have a volume system)
         /// </summary>
         DatabaseFiller = 0x00F0,
+
         /// <summary>
         /// TSK_VS_TYPE_UNSUPP, Unsupported
         /// </summary>
@@ -360,10 +367,12 @@ namespace SleuthKit
         /// set user id on execution 
         /// </summary>
         TSK_FS_META_MODE_ISUID = 0004000,
+
         /// <summary>
         /// set group id on execution 
         /// </summary>
         TSK_FS_META_MODE_ISGID = 0002000,
+
         /// <summary>
         /// sticky bit 
         /// </summary>
@@ -373,10 +382,12 @@ namespace SleuthKit
         /// R for owner 
         /// </summary>
         TSK_FS_META_MODE_IRUSR = 0000400,
+
         /// <summary>
         /// W for owner 
         /// </summary>
         TSK_FS_META_MODE_IWUSR = 0000200,
+
         /// <summary>
         /// X for owner 
         /// </summary>
@@ -386,10 +397,12 @@ namespace SleuthKit
         /// R for group 
         /// </summary>
         TSK_FS_META_MODE_IRGRP = 0000040,
+
         /// <summary>
         /// W for group 
         /// </summary>
         TSK_FS_META_MODE_IWGRP = 0000020,
+
         /// <summary>
         /// X for group 
         /// </summary>
@@ -399,10 +412,12 @@ namespace SleuthKit
         /// R for other 
         /// </summary>
         TSK_FS_META_MODE_IROTH = 0000004,
+
         /// <summary>
         /// W for other 
         /// </summary>
         TSK_FS_META_MODE_IWOTH = 0000002,
+
         /// <summary>
         /// X for other 
         /// </summary>
@@ -450,10 +465,12 @@ namespace SleuthKit
         /// TSK_WALK_CONT, Walk function should continue to next object
         /// </summary>
         Continue = 0x0,
+
         /// <summary>
         /// TSK_WALK_STOP,  Walk function should stop processing units and return OK
         /// </summary>
         Stop = 0x1,
+
         /// <summary>
         /// TSK_WALK_ERROR, Walk function should stop processing units and return error
         /// </summary>
@@ -466,6 +483,7 @@ namespace SleuthKit
         /// TSK_FS_INFO_FLAG_NONE, No Flags
         /// </summary>
         None = 0x00,
+
         /// <summary>
         /// TSK_FS_INFO_FLAG_HAVE_SEQ, File system has sequence numbers in the inode addresses.
         /// </summary>
@@ -601,112 +619,112 @@ namespace SleuthKit
     /// <summary>
     /// Managed version of TSK_FS_TYPE_ENUM
     /// </summary>
+    [Flags]
     public enum FileSystemType : uint
     {
         /// <summary>
         /// TSK_FS_TYPE_DETECT, Use autodetection methods
         /// </summary>
         Autodetect = 0x00000000,
+
         /// <summary>
         /// TSK_FS_TYPE_NTFS, NTFS file system
         /// </summary>
         NTFS = 0x00000001,
-        /// <summary>
-        /// TSK_FS_TYPE_NTFS_DETECT, NTFS auto detection
-        /// </summary>
-        NTFSAutodetect = 0x00000001,
+
         /// <summary>
         /// TSK_FS_TYPE_FAT12, FAT12 file system
         /// </summary>
         FAT12 = 0x00000002,
+
         /// <summary>
         /// TSK_FS_TYPE_FAT16, FAT16 file system
         /// </summary>
         FAT16 = 0x00000004,
+
         /// <summary>
         /// TSK_FS_TYPE_FAT32, FAT32 file system
         /// </summary>
         FAT32 = 0x00000008,
+
+        /// <summary>
+        /// TSK_FS_TYPE_EXFAT, ExFAT file system
+        /// </summary>
+        ExFAT = 0x0000000a,
+
         /// <summary>
         /// TSK_FS_TYPE_FAT_DETECT, FAT auto detection
         /// </summary>
+        [Description("Autodetect FAT")]
         FATAutodetect = 0x0000000e,
+
         /// <summary>
         /// TSK_FS_TYPE_FFS1, UFS1 (FreeBSD, OpenBSD, BSDI ...)
         /// </summary>
         UFS1 = 0x00000010,
+
         /// <summary>
         /// TSK_FS_TYPE_FFS1B, UFS1b (Solaris - has no type)
         /// </summary>
         UFS1b = 0x00000020,
+
         /// <summary>
         /// TSK_FS_TYPE_FFS2, UFS2 - FreeBSD, NetBSD 
         /// </summary>
         UFS2 = 0x00000040,
+
         /// <summary>
         /// TSK_FS_TYPE_FFS_DETECT, UFS auto detection
         /// </summary>
+        [Description("Autodetect UFS")]
         UFSAutodetect = 0x00000070,
+
         /// <summary>
         /// TSK_FS_TYPE_EXT2, Ext2 file system
         /// </summary>
         ext2 = 0x00000080,
+
         /// <summary>
         /// TSK_FS_TYPE_EXT3, Ext3 file system
         /// </summary>
         ext3 = 0x00000100,
-        /// <summary>
-        /// TSK_FS_TYPE_EXT_DETECT, ExtX auto detection
-        /// </summary>
-        extAutodetect = 0x00002180,
-        /// <summary>
-        /// TSK_FS_TYPE_SWAP, SWAP file system
-        /// </summary>
-        Swap = 0x00000200,
-        /// <summary>
-        /// SWAP auto detection
-        /// </summary>
-        TSK_FS_TYPE_SWAP_DETECT = 0x00000200,
-        /// <summary>
-        /// TSK_FS_TYPE_RAW, RAW file system
-        /// </summary>
-        Raw = 0x00000400,
-        /// <summary>
-        /// TSK_FS_TYPE_RAW_DETECT, RAW auto detection
-        /// </summary>
-        RawAutodetect = 0x00000400,
-        /// <summary>
-        /// TSK_FS_TYPE_ISO9660, ISO9660 file system
-        /// </summary>
-        ISO9660 = 0x00000800,
-        /// <summary>
-        /// TSK_FS_TYPE_ISO9660_DETECT, ISO9660 auto detection
-        /// </summary>
-        ISO9660Autodetect = 0x00000800,
-        /// <summary>
-        /// TSK_FS_TYPE_HFS, HFS file system
-        /// </summary>
-        HFS = 0x00001000,
-        /// <summary>
-        /// TSK_FS_TYPE_HFS_DETECT, HFS auto detection
-        /// </summary>
-        HFSAutodetect = 0x00001000,
 
         /// <summary>
         /// TSK_FS_TYPE_EXT4, Ext4 file system
         /// </summary>
-        Ext4 = 0x00002000,  
+        ext4 = 0x00002000,
+
+        /// <summary>
+        /// TSK_FS_TYPE_EXT_DETECT, ExtX auto detection
+        /// </summary>
+        [Description("Autodetect ext")]
+        extAutodetect = 0x00002180,
+
+        /// <summary>
+        /// TSK_FS_TYPE_SWAP, SWAP file system
+        /// </summary>
+        Swap = 0x00000200,
+
+        /// <summary>
+        /// TSK_FS_TYPE_RAW, RAW file system
+        /// </summary>
+        Raw = 0x00000400,
+
+        /// <summary>
+        /// TSK_FS_TYPE_ISO9660, ISO9660 file system
+        /// </summary>
+        ISO9660 = 0x00000800,
+
+        /// <summary>
+        /// TSK_FS_TYPE_HFS, HFS file system
+        /// </summary>
+        HFS = 0x00001000,
          
         /// <summary>
         /// TSK_FS_TYPE_YAFFS2, YAFFS2 file system
         /// </summary>
         Yaffs2 = 0x00004000,     
-        
-        /// <summary>
-        /// TSK_FS_TYPE_YAFFS2_DETECT, YAFFS2 auto detection
-        /// </summary>
-        Yaffs2AutoDetect = 0x00004000, 
-                                                
+                                                        
         /// <summary>
         /// TSK_FS_TYPE_UNSUPP, Unsupported file system
         /// </summary>
@@ -726,6 +744,7 @@ namespace SleuthKit
         /// TSK_LIT_ENDIAN, Data is in little endian
         /// </summary>
         Little = 0x01,
+
         /// <summary>
         /// TSK_BIG_ENDIAN, Data is in big endian
         /// </summary>
@@ -761,6 +780,7 @@ namespace SleuthKit
         /// TSK_IMG_TYPE_AFF_AFF, AFF AFF Format
         /// </summary>
         AFF = 0x0004,
+
         /// <summary>
         /// TSK_IMG_TYPE_AFF_AFD , AFD AFF Format
         /// </summary>
@@ -797,14 +817,17 @@ namespace SleuthKit
         /// TSK_VS_PART_FLAG_ALLOC, Sectors are allocated to a volume in the volume system
         /// </summary>
         Allocated = 0x01,
+
         /// <summary>
         ///  TSK_VS_PART_FLAG_UNALLOC, Sectors are not allocated to a volume 
         /// </summary>
         Unallocated = 0x02,
+
         /// <summary>
         /// TSK_VS_PART_FLAG_META, Sectors contain volume system metadata and could also be ALLOC or UNALLOC
         /// </summary>
         Metadata = 0x04,
+
         /// <summary>
         /// TSK_VS_PART_FLAG_ALL, Show all sectors in the walk. 
         /// </summary>

@@ -58,7 +58,7 @@ namespace SleuthKit
                 {
                     case FileSystemType.ext2:
                     case FileSystemType.ext3:
-                    case FileSystemType.Ext4:
+                    case FileSystemType.ext4:
                         EXT2FS_INFO ext2Struct = _handle.GetStructExt2();
                         return ext2Struct.fs.VolumeName;
 
@@ -85,7 +85,7 @@ namespace SleuthKit
                             Endianness endian = _handle.GetStruct().Endian;
                             return hfsRootEntry.Thread.Name.GetString(endian);
                         }
-                        else 
+                        else
                         {
                             return _struct.Offset.ToString();
                         }
@@ -101,7 +101,8 @@ namespace SleuthKit
                         {
                             AttributeHandle attrHandle = NativeMethods.tsk_fs_attrlist_get(
                                 mftVol.FileStruct.Metadata.Value.attrPtr, AttributeType.NtfsVName);
-                            return attrHandle.GetStruct().rdBufString;
+
+                            return attrHandle.GetStruct().rdBufString ?? _struct.Offset.ToString();
                         }
                         else
                         {

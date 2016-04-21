@@ -181,21 +181,69 @@ namespace SleuthKit
             return vs;
         }
 
+        public bool HasVolumes
+        {
+            get
+            {
+                using (VolumeSystem volumeSystem = OpenVolumeSystem())
+                {
+                    return (volumeSystem != null && volumeSystem.PartitionCount > 0 && volumeSystem.Volumes.Count() > 0);
+                }
+            }
+        }
+
+        public IEnumerable<VolumeInformation> Volumes
+        {
+            get
+            {
+                using (VolumeSystem volumeSystem = OpenVolumeSystem())
+                {
+                    if (null == volumeSystem) 
+                    {
+                        yield break;
+                    }
+
+                    foreach (Volume volume in volumeSystem.Volumes)
+                    {
+                        yield return new VolumeInformation() {
+                            Address = volume.Address,
+                            Description = volume.Description,
+                            Flags = volume.Flags,
+                            IsAllocated = volume.IsAllocated,
+                            Length = volume.Length,
+                            Offset = volume.Offset,
+                            SectorLength = volume.SectorLength,
+                            SectorOffset = volume.SectorOffset
+                        };
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Opens a filesystem - for images with no partition table, i.e. volume images, or most SD cards and thumb drives that are formatted  .
         /// </summary>
         /// <param name="fstype"></param>
         /// <param name="offset"></param>
         /// <returns></returns>
-        public FileSystem OpenFileSystem(FileSystemType fstype = FileSystemType.Autodetect, long offset = 0)
+        public FileSystem OpenFileSystem(FileSystemType fileSystemType = FileSystemType.Autodetect, long offset = 0)
         {
-            var fs = new FileSystem(this, fstype, offset);
+            FileSystem fs = new FileSystem(this, fileSystemType, offset);
+
             if (fs._handle.IsInvalid)
             {
                 fs._handle.Close();
-                fs = null;
+
+                uint errorCode = NativeMethods.tsk_error_get_errno();
+                IntPtr ptrToMessage = NativeMethods.tsk_error_get_errstr();
+                String errorMessage = Marshal.PtrToStringAnsi(ptrToMessage);
+                String ioExceptionMessage = String.Format("{0} (0x{1,8:X8})", errorMessage, errorCode);
+                throw new IOException(ioExceptionMessage);
             }
-            return fs;
+            else
+            {
+                return fs;
+            }
         }
 
         /// <summary>

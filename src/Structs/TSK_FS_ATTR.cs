@@ -243,7 +243,9 @@ namespace SleuthKit.Structs
         {
             get
             {
-                return Marshal.PtrToStringUni(rd_buf_ptr, (int)(size / 2));
+                return rd_buf_ptr == null
+                    ? null
+                    : Marshal.PtrToStringUni(rd_buf_ptr, (int)(size / 2));
             }
         }
     }

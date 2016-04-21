@@ -108,13 +108,13 @@
   <ItemGroup Condition="'$(Platform)' == 'x64'">
     <Reference Include="ewf.net, Version=1.0.5156.25405, Culture=neutral, PublicKeyToken=c0e8495fa322da2d, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\x64\ewf.net.dll</HintPath>
+      <HintPath>..\Lib\x64\ewf.net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Platform)' != 'x64'">
     <Reference Include="ewf.net, Version=1.0.5156.25405, Culture=neutral, PublicKeyToken=c0e8495fa322da2d, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\x86\ewf.net.dll</HintPath>
+      <HintPath>..\Lib\x86\ewf.net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -150,7 +150,7 @@
     <Compile Include="Structs\TSK_FS_DIR.cs" />
     <Compile Include="Structs\ext2fs_sb.cs" />
     <Compile Include="Structs\FATFS_INFO.cs" />
-    <Compile Include="Structs\fatfs_sb.cs" />
+    <Compile Include="Structs\FATXXFS_SB.cs" />
     <Compile Include="Structs\FFS_INFO.cs" />
     <Compile Include="Structs\ffs_sb2.cs" />
     <Compile Include="Structs\TSK_FS_META.cs" />
@@ -169,6 +169,7 @@
     <Compile Include="Structs\TSK_VS_INFO.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Volume.cs" />
+    <Compile Include="VolumeInformation.cs" />
     <Compile Include="VolumeSystem.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,12 +1,11 @@
-﻿namespace SleuthKit
+﻿using EWF;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+
+namespace SleuthKit
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
-
-    using EWF;
-
     /// <summary>
     /// A class to extract meta data from E01 file
     /// </summary>
@@ -24,7 +23,7 @@
         public static IDictionary<string, string> Extract(string fileName)
         {
             var handle = new Handle();
-            
+
             // dictionary/map to store the metadata as key value pairs
             var metaDataDictionary = new Dictionary<string, string>();
 
@@ -40,7 +39,7 @@
                 {
                     try
                     {
-                        // extract the header 
+                        // extract the header
                         string headerId = handle.GetHeaderValueIdentifier(i);
 
                         // get the header value
