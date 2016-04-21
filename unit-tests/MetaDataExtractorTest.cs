@@ -60,7 +60,7 @@
             // get the metadata from USB-disk-image-FAT.Ex01
             IDictionary<string, string> actual = MetaDataExtractor.Extract(Path.GetFullPath(fileName));
 
-            CollectionAssert.AreEquivalent(actual, expected);
+            CollectionAssert.AreEquivalent(expected, actual);
         }
 
         #endregion

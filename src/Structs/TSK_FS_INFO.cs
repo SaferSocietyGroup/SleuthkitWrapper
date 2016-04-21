@@ -1,9 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 
 namespace SleuthKit.Structs
 {
@@ -27,7 +23,7 @@ namespace SleuthKit.Structs
 #elif Bit64
         [FieldOffset(0)]
 #endif
-        StructureMagic tag;
+        private StructureMagic tag;
 
         /// <summary>
         /// pointer to imageinfo struct
@@ -37,17 +33,17 @@ namespace SleuthKit.Structs
 #elif Bit64
         [FieldOffset(8)]
 #endif
-        IntPtr img_info_ptr;
+        private IntPtr img_info_ptr;
 
         /// <summary>
-        /// TSK_OFF_T offset, Byte offset into img_info that fs starts 
+        /// TSK_OFF_T offset, Byte offset into img_info that fs starts
         /// </summary>
 #if Bit32
         [FieldOffset(8)]
 #elif Bit64
         [FieldOffset(16)]
 #endif
-        long offset;
+        private long offset;
 
         /* meta data */
 
@@ -116,7 +112,6 @@ namespace SleuthKit.Structs
         /// <summary>
         /// Address of last block as reported by file system (could be larger than last_block in image if end of image does not exist)
         /// </summary>
-        /// 
 #if Bit32
         [FieldOffset(64)]
 #elif Bit64
@@ -182,27 +177,27 @@ namespace SleuthKit.Structs
 #elif Bit64
         [FieldOffset(104)]
 #endif
-        ulong journ_inum;
+        private ulong journ_inum;
 
         /// <summary>
-        /// type of file system 
+        /// type of file system
         /// </summary>
 #if Bit32
         [FieldOffset(104)]
 #elif Bit64
         [FieldOffset(112)]
 #endif
-        FileSystemType ftype;
+        private FileSystemType ftype;
 
         /// <summary>
-        /// string "name" of data unit type 
+        /// string "name" of data unit type
         /// </summary>
 #if Bit32
         [FieldOffset(108)]
 #elif Bit64
         [FieldOffset(120)]
 #endif
-        IntPtr duname_ptr;
+        private IntPtr duname_ptr;
 
         /// <summary>
         /// flags
@@ -212,7 +207,7 @@ namespace SleuthKit.Structs
 #elif Bit64
         [FieldOffset(128)]
 #endif
-        FilesystemInfoFlag flags;
+        private FilesystemInfoFlag flags;
 
         /// <summary>
         /// File system id (as reported in boot sector)
@@ -223,7 +218,7 @@ namespace SleuthKit.Structs
 #elif Bit64
         [FieldOffset(132)]
 #endif
-        IntPtr fs_id_ptr; //uint8_t[] fs_id;
+        private IntPtr fs_id_ptr; //uint8_t[] fs_id;
 
         /// <summary>
         /// fs id used
@@ -233,14 +228,14 @@ namespace SleuthKit.Structs
 #elif Bit64
         [FieldOffset(168)]
 #endif
-        UIntPtr fs_id_used;
+        private UIntPtr fs_id_used;
 
 #if Bit32
         [FieldOffset(152)]
 #elif Bit64
         [FieldOffset(176)]
 #endif
-        Endianness endian;
+        private Endianness endian;
 
         /// <summary>
         /// taken when r/w the list_inum_named list
@@ -250,7 +245,7 @@ namespace SleuthKit.Structs
 #elif Bit64
         [FieldOffset(184)]
 #endif
-        tsk_lock_t list_inum_named_lock;
+        private tsk_lock_t list_inum_named_lock;
 
         /// <summary>
         /// List of unallocated inodes that
@@ -260,7 +255,7 @@ namespace SleuthKit.Structs
 #elif Bit64
         [FieldOffset(224)]
 #endif
-        IntPtr list_inum_named_ptr; //TSK_LIST *list_inum_named; 
+        private IntPtr list_inum_named_ptr; //TSK_LIST *list_inum_named;
 
         /// <summary>
         /// taken for the duration of orphan hunting (not just when updating orphan_dir)
@@ -270,17 +265,17 @@ namespace SleuthKit.Structs
 #elif Bit64
         [FieldOffset(232)]
 #endif
-        tsk_lock_t orphan_dir_lock;
+        private tsk_lock_t orphan_dir_lock;
 
         /// <summary>
-        /// Files and dirs in the top level of the $OrphanFiles directory.  NULL if orphans have not been hunted for yet. 
+        /// Files and dirs in the top level of the $OrphanFiles directory.  NULL if orphans have not been hunted for yet.
         /// </summary>
 #if Bit32
         [FieldOffset(208)]
 #elif Bit64
         [FieldOffset(272)]
 #endif
-        IntPtr orphan_dir_ptr; //TSK_FS_DIR *orphan_dir; 
+        private IntPtr orphan_dir_ptr; //TSK_FS_DIR *orphan_dir;
 
         #region methods
 
@@ -289,85 +284,84 @@ namespace SleuthKit.Structs
 #elif Bit64
         [FieldOffset(280)]
 #endif
-        IntPtr block_walk_ptr;
+        private IntPtr block_walk_ptr;
 
 #if Bit32
         [FieldOffset(216)]
 #elif Bit64
         [FieldOffset(288)]
 #endif
-        IntPtr block_getflags_ptr;
+        private IntPtr block_getflags_ptr;
 
 #if Bit32
         [FieldOffset(220)]
 #elif Bit64
         [FieldOffset(296)]
 #endif
-        IntPtr inode_Walk_ptr;
+        private IntPtr inode_Walk_ptr;
 
 #if Bit32
         [FieldOffset(224)]
 #elif Bit64
         [FieldOffset(304)]
 #endif
-        IntPtr file_add_meta_ptr;
+        private IntPtr file_add_meta_ptr;
 
 #if Bit32
         [FieldOffset(228)]
 #elif Bit64
         [FieldOffset(312)]
 #endif
-        IntPtr get_default_attr_type_ptr;
+        private IntPtr get_default_attr_type_ptr;
 
 #if Bit32
         [FieldOffset(232)]
 #elif Bit64
         [FieldOffset(320)]
 #endif
-        IntPtr load_attrs_ptr;
-
+        private IntPtr load_attrs_ptr;
 
 #if Bit32
         [FieldOffset(236)]
 #elif Bit64
         [FieldOffset(328)]
 #endif
-        IntPtr istat_ptr;
+        private IntPtr istat_ptr;
 
 #if Bit32
         [FieldOffset(240)]
 #elif Bit64
         [FieldOffset(336)]
 #endif
-        IntPtr ir_open_meta_ptr;
+        private IntPtr dir_open_meta_ptr;
 
 #if Bit32
         [FieldOffset(244)]
 #elif Bit64
         [FieldOffset(344)]
 #endif
-        IntPtr jopen_ptr;
+        private IntPtr jopen_ptr;
 
 #if Bit32
         [FieldOffset(248)]
 #elif Bit64
         [FieldOffset(352)]
 #endif
-        IntPtr jblk_walk_ptr;
+        private IntPtr jblk_walk_ptr;
 
 #if Bit32
         [FieldOffset(252)]
 #elif Bit64
         [FieldOffset(360)]
 #endif
-        IntPtr jentry_walk_ptr;
+        private IntPtr jentry_walk_ptr;
 
 #if Bit32
         [FieldOffset(256)]
 #elif Bit64
         [FieldOffset(368)]
 #endif
-        IntPtr fsstat_ptr;
+        private IntPtr fsstat_ptr;
 
         /*
         public fsstatDelegate fsstat;
@@ -381,30 +375,30 @@ namespace SleuthKit.Structs
 #elif Bit64
         [FieldOffset(376)]
 #endif
-        IntPtr name_cmp_ptr;
+        private IntPtr name_cmp_ptr;
 
 #if Bit32
         [FieldOffset(264)]
 #elif Bit64
         [FieldOffset(384)]
 #endif
-        IntPtr fscheck_ptr;
+        private IntPtr fscheck_ptr;
 
 #if Bit32
         [FieldOffset(268)]
 #elif Bit64
         [FieldOffset(392)]
 #endif
-        IntPtr close_ptr;
+        private IntPtr close_ptr;
 
 #if Bit32
         [FieldOffset(272)]
 #elif Bit64
-        [FieldOffset(408)]
+        [FieldOffset(400)]
 #endif
-        IntPtr fread_owner_sid_ptr;
+        private IntPtr fread_owner_sid_ptr;
 
-        #endregion
+        #endregion methods
 
         /// <summary>
         /// Returns nothing at the moment

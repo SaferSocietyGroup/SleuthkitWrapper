@@ -1,5 +1,7 @@
 ﻿using SleuthKit.Structs;
 using System;
+using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace SleuthKit
@@ -141,9 +143,24 @@ namespace SleuthKit
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public FileSystem OpenFileSystem(FileSystemType type = FileSystemType.Autodetect)
+        public FileSystem OpenFileSystem(FileSystemType fileSystemType = FileSystemType.Autodetect)
         {
-            return new FileSystem(this,type);
+            FileSystem fs = new FileSystem(this, fileSystemType);
+
+            if (fs._handle.IsInvalid)
+            {
+                fs._handle.Close();
+
+                uint errorCode = NativeMethods.tsk_error_get_errno();
+                IntPtr ptrToMessage = NativeMethods.tsk_error_get_errstr();
+                String errorMessage = Marshal.PtrToStringAnsi(ptrToMessage);
+                String ioExceptionMessage = String.Format("{0} (0x{1,8:X8})", errorMessage, errorCode);
+                throw new IOException(ioExceptionMessage);
+            }
+            else
+            {
+                return fs;
+            }
         }
 
         /// <summary>

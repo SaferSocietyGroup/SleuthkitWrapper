@@ -167,6 +167,12 @@
                 int count = 0;
                 foreach (Volume volume in volumeSystem.Volumes)
                 {
+                    if (volume.Description == "Primary Table (#0)" ||
+                        volume.Description == "Unallocated")
+                    {
+                        continue;
+                    }
+
                     using (FileSystem fileSystem = volume.OpenFileSystem())
                     {
                         //count += CountFiles(fileSystem.OpenRootDirectory());
