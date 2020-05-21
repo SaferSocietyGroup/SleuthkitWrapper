@@ -96,6 +96,20 @@ namespace SleuthKit
             internal set;
         }
 
+        //AT 2020.04.23
+        public bool Deleted
+        {
+            get;
+            internal set;
+        }
+
+        //AT 2020.04.23
+        public bool InvalidHandle
+        {
+            get;
+            internal set;
+        }
+
         #endregion
     }
 
@@ -125,6 +139,45 @@ namespace SleuthKit
             this._handle = fh;
             this._struct = fh.GetStruct();
             this._parentDir = parent;
+
+            if (name == null)
+            {
+                if (_struct.Name.HasValue)
+                {
+                    this.Name = _struct.Name.Value.GetName();
+                }
+            }
+            else
+            {
+                this.Name = name;
+            }
+
+            if (_struct.Metadata.HasValue)
+            {
+                var m = _struct.Metadata.Value;
+
+                this.Address = m.Address;
+
+                this.Type = m.type;
+                this.Size = m.Size;
+                this.CreationTime = epoch.AddSeconds(m.CRTime);
+                this.LastWriteTime = epoch.AddSeconds(m.MTime);
+                this.LastAccessTime = epoch.AddSeconds(m.ATime);
+                this.MetadataWriteTime = epoch.AddSeconds(m.CTime);
+            }
+
+            this.FileSystem = this._fs;
+
+        }
+
+        //AT 2020.04.23 - file with invalid handle
+        internal File(FileSystem fs, TSK_FS_FILE e, Directory parent, string name)
+        {
+            this._fs = fs;
+            this._handle = null;
+            this._struct = e;
+            this._parentDir = parent;
+            this.InvalidHandle = true;
 
             if (name == null)
             {

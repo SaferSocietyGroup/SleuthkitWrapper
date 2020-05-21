@@ -39,6 +39,13 @@ namespace SleuthKit
                 this.LastWriteTime = epoch.AddSeconds(m.MTime);
                 this.LastAccessTime = epoch.AddSeconds(m.ATime);
                 this.MetadataWriteTime = epoch.AddSeconds(m.CTime);
+
+                //AT 2020.04.23 - preserve if deleted or not
+                if ((m.MetadataFlags & MetadataFlags.Unallocated) == MetadataFlags.Unallocated)
+                {
+                    this.Deleted = true;
+                }
+
             }
 
             if (name == null)
@@ -160,6 +167,26 @@ namespace SleuthKit
                         var f = this._fs.OpenFile(kidpath, this);
                         if (f != null)
                         {
+                            //AT 2020.04.23 -if name is missing add name back
+                            if (string.IsNullOrWhiteSpace(f.Name))
+                                f.Name = fn;
+
+                            //AT 2020.04.23 - preserve if deleted or not
+                            if ((e.Metadata.Value.MetadataFlags & MetadataFlags.Unallocated) == MetadataFlags.Unallocated)
+                            {
+                                f.Deleted = true;
+                            }
+
+                            yield return f;
+                        }
+                        //AT 2020.04.23 - most likely deleted file that is non-recoverable
+                        else
+                        {
+                            f = new File(this._fs, e, this, fn);
+                            if ((e.Metadata.Value.MetadataFlags & MetadataFlags.Unallocated) == MetadataFlags.Unallocated)
+                            {
+                                f.Deleted = true;
+                            }
                             yield return f;
                         }
                     }
@@ -191,6 +218,16 @@ namespace SleuthKit
 
                         if (d != null)
                         {
+                            //AT 2020.04.23 -if name is missing add name back
+                            if (string.IsNullOrWhiteSpace(d.Name))
+                                d.Name = fn;
+
+                            //AT 2020.04.23 - preserve if deleted or not
+                            if ((e.Metadata.Value.MetadataFlags & MetadataFlags.Unallocated) == MetadataFlags.Unallocated)
+                            {
+                                d.Deleted = true;
+                            }
+
                             yield return d;
                         }
                     }
