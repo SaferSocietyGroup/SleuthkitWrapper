@@ -50,6 +50,15 @@ namespace SleuthKit
 
         #region Properties
 
+        //AT - 2020.04.29 Root inum for volume
+        public long RootInum
+        {
+            get
+            {
+                return this._struct.root_inum;
+            }
+        }
+
         public String Label
         {
             get 
@@ -265,7 +274,7 @@ namespace SleuthKit
                 dh.Close();
             }
             return dir;
-        }
+         }
 
         /// <summary>
         /// Opens a directory by metadata address
